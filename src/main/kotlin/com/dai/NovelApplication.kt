@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = arrayOf(DataSourceAutoConfiguration::class))
+@EnableAutoConfiguration(exclude = [(DataSourceAutoConfiguration::class)])
 class NovelApplication
 
 fun main(args: Array<String>) {
