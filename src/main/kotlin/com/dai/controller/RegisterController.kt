@@ -4,9 +4,9 @@ import com.dai.bean.User
 import com.dai.service.RegisterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
 
@@ -19,20 +19,10 @@ class RegisterController
 @Autowired
 constructor(private val registerService: RegisterService) {
 
-//    @ResponseBody
-//    @RequestMapping(value = "/register", method = arrayOf(RequestMethod.POST))
-//    fun receiveData1(@RequestParam(value = "account", required = true) account: String,
-//                     @RequestParam(value = "password", required = true) password: String): Any {//接收数据
-//        println("account = $account")
-//        println("password = $password")
-//        val user = User(account, password, "", 0, "", "", "", "", "");
-//        return registerService.backResult(user)
-//    }
-
     @ResponseBody
     @RequestMapping(value = "/register", method = arrayOf(RequestMethod.POST))
-    fun receiveData(@PathVariable("account") account: String,
-                    @PathVariable("password") password: String): Any {//接收数据
+    fun receiveData(@RequestParam(value = "account", required = true) account: String,
+                     @RequestParam(value = "password", required = true) password: String): Any {//接收数据
         println("account = $account")
         println("password = $password")
         val user = User(account, password, "", 0, "", "", "", "", "");
