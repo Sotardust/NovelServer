@@ -26,7 +26,7 @@ constructor(private val registerMapper: RegisterMapper) {
 
     // 返回注册结果
     fun backResult(user: User): Any {
-        
+
         // 查找所有账号
         val flag = registerMapper.findAllAccount().any { user.account == it }
 
