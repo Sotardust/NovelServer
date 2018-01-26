@@ -8,7 +8,7 @@
     </select>
 
     <select id="findAllAccount" resultType="java.util.List">
-        SELECT account FROM "user"
+        SELECT account FROM user
     </select>
 
     <insert id="insertData" useGeneratedKeys="true">
