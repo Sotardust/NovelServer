@@ -16,11 +16,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import javax.sql.DataSource
 
 @Configuration
-@MapperScan(basePackages = ["com.dai.dao"], sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = arrayOf("com.dai.dao"), sqlSessionFactoryRef = "sqlSessionFactory")
 
 //@EnableTransactionManagement
 // 自己添加的，指定配置文件
-@PropertySource(value = ["classpath:application.properties"], ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:application.properties", ignoreResourceNotFound = true)
 class DataSourceConfig
 constructor() {
 
