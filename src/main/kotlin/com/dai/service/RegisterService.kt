@@ -26,19 +26,28 @@ constructor(private val registerMapper: RegisterMapper) {
 
     // 返回注册结果
     fun backResult(user: User): Any {
+        
+        // 查找所有账号
+        val flag = registerMapper.findAllAccount().any { user.account == it }
+
         val result = HashMap<String, String>()
+        if (flag) {
+            result.put("success", "0")
+            result.put("error", "该账号已被注册")
+            return result
+        }
         val bool = insertData(user);
         if (bool) {
-            result.put("success", "0")
-            result.put("error", "用户名错误")
+            result.put("success", "1")
+            result.put("error", "")
         } else {
             result.put("success", "0")
-            result.put("error", "密码错误")
+            result.put("error", "注册失败")
         }
         return result
     }
 
     fun getIds(): Int {
-        return registerMapper.ids
+        return registerMapper.getIds()
     }
 }
