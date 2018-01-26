@@ -21,7 +21,7 @@ constructor(private val registerService: RegisterService) {
 
     @ResponseBody
     @RequestMapping(value = "/register", method = arrayOf(RequestMethod.POST))
-    fun receiveData(@PathVariable account: String, @PathVariable password: String): Any {//接收数据
+    fun receiveData(@PathVariable("account") account: String, @PathVariable("password") password: String): Any {//接收数据
         println("account = $account")
         println("password = $password")
         val user = User(account, password, "", 0, "", "", "", "", "");
