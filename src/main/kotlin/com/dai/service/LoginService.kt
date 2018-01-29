@@ -34,4 +34,9 @@ constructor(private val registerMapper: RegisterMapper) {
         }
         return result
     }
+
+    // 获取所有账号
+    fun getAllAccount(): Any {
+        return registerMapper.findAllAccount();
+    }
 }
