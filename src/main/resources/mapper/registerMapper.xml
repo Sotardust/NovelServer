@@ -7,7 +7,7 @@
         FROM user
     </select>
 
-    <select id="findAllAccount" resultType="java.util.List">
+    <select id="findAllAccount" resultType="String">
         SELECT account FROM user
     </select>
 
