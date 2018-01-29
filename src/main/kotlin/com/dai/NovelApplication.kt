@@ -12,9 +12,5 @@ class NovelApplication
 fun main(args: Array<String>) {
     println("hello kotlin")
     SpringApplication.run(NovelApplication::class.java, *args)
-    for (i in 0..9) {
-        println("测试demo = " + i)
-    }
-
-    println("args = [$args]")
+    println("运行成功")
 }
