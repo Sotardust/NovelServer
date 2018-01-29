@@ -24,9 +24,10 @@ constructor(private val loginService: LoginService) {
               @RequestParam(value = "password", required = true) password: String,
               httpServletResponse: HttpServletResponse, httpServletRequest: HttpServletRequest): Any {
 
-        for (cookie in httpServletRequest.cookies){
-            println("cookie = ${cookie.value}")
-        }
+        println("httpServletRequest = ${httpServletRequest.cookies}")
+//        for (cookie in httpServletRequest.cookies){
+//            println("cookie = ${cookie.value}")
+//        }
 
         return loginService.returnResult(account, password)
     }

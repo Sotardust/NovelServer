@@ -19,9 +19,10 @@ constructor(private val loginService: LoginService) {
     @ResponseBody
     @RequestMapping("/get_accounts", method = [(RequestMethod.GET)])
     fun getAllAccounts(httpServletRequest: HttpServletRequest): Any {
-        for (cookie in httpServletRequest.cookies){
-            println("getAllAccounts cookie = ${cookie.value}")
-        }
+        println("httpServletRequest.cookies = ${httpServletRequest.cookies}")
+//        for (cookie in httpServletRequest.cookies) {
+//            println("getAllAccounts cookie = ${cookie.value}")
+//        }
         return loginService.getAllAccount()
     }
 }
