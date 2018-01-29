@@ -29,8 +29,7 @@ constructor(private val registerMapper: RegisterMapper) {
         println("registerMapper.findAllAccount() = ${registerMapper.findAllAccount()}")
 
         // 查找所有账号
-//        val flag = registerMapper.findAllAccount().any { user.account == it }
-        val flag = false
+        val flag = registerMapper.findAllAccount().any { user.account == it }
 
         val result = HashMap<String, String>()
         if (flag) {
