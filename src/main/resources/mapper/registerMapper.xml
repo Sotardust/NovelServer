@@ -16,4 +16,8 @@
         VALUES (#{account}, #{password}, #{nick}, #{age}, #{sex}, #{number}, #{head}, #{email},#{introduction})
     </insert>
 
+    <select id="findPassword" parameterType="String" resultType="String">
+        SELECT password FROM user WHERE account = #{account}
+    </select>
+
 </mapper>

@@ -9,8 +9,12 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class NovelApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun contextLoads() {
+//        val registerMapper: RegisterMapper? = null
+//        val loginService: LoginService = LoginService(registerMapper!!)
+//
+//        println("login = ${loginService.returnResult("xiao", "1")}")
+    }
 
 }

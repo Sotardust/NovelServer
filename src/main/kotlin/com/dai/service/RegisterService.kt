@@ -27,23 +27,22 @@ constructor(private val registerMapper: RegisterMapper) {
     // 返回注册结果
     fun backResult(user: User): Any {
         println("registerMapper.findAllAccount() = ${registerMapper.findAllAccount()}")
-
         // 查找所有账号
         val flag = registerMapper.findAllAccount().any { user.account == it }
 
         val result = HashMap<String, String>()
         if (flag) {
-            result.put("success", "0")
-            result.put("error", "该账号已被注册")
+            result["success"] = "0"
+            result["error"] = "该账号已被注册"
             return result
         }
         val bool = insertData(user);
         if (bool) {
-            result.put("success", "1")
-            result.put("error", "")
+            result["success"] = "1"
+            result["error"] = ""
         } else {
-            result.put("success", "0")
-            result.put("error", "注册失败")
+            result["success"] = "0"
+            result["error"] = "注册失败"
         }
         return result
     }
