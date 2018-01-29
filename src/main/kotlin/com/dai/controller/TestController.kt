@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
+import javax.servlet.http.HttpServletRequest
 
 /**
  * Created by dai on 2018/1/29.
@@ -17,7 +18,10 @@ constructor(private val loginService: LoginService) {
 
     @ResponseBody
     @RequestMapping("/get_accounts", method = [(RequestMethod.GET)])
-    fun getAllAccounts(): Any {
+    fun getAllAccounts(httpServletRequest: HttpServletRequest): Any {
+        for (cookie in httpServletRequest.cookies){
+            println("getAllAccounts cookie = ${cookie.value}")
+        }
         return loginService.getAllAccount()
     }
 }
