@@ -1,6 +1,7 @@
 package com.dai.controller
 
 import com.dai.service.LoginService
+import com.dai.utils.token.TokenManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,6 +20,7 @@ constructor(private val loginService: LoginService) {
     @ResponseBody
     @RequestMapping("/get_accounts", method = [(RequestMethod.GET)])
     fun getAllAccounts(httpServletRequest: HttpServletRequest): Any {
+        TokenManager().verifyAccount(httpServletRequest)
         println("httpServletRequest.cookies = ${httpServletRequest.cookies}")
 //        for (cookie in httpServletRequest.cookies) {
 //            println("getAllAccounts cookie = ${cookie.value}")

@@ -1,6 +1,7 @@
 package com.dai.controller
 
 import com.dai.service.LoginService
+import com.dai.utils.token.TokenManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -28,6 +29,7 @@ constructor(private val loginService: LoginService) {
         val cookie = Cookie("cookie", "cookieValue");
         httpServletResponse.addCookie(cookie)
         println("httpServletRequest = ${httpServletRequest.cookies}")
+        TokenManager().verifyAccount(httpServletRequest)
 //        for (cookie in httpServletRequest.cookies){
 //            println("cookie = ${cookie.value}")
 //        }
