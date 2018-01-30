@@ -20,7 +20,7 @@ class RegisterController
 constructor(private val registerService: RegisterService) {
 
     @ResponseBody
-    @RequestMapping(value = "/register", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = ["/register"], method = [(RequestMethod.POST)])
     fun receiveData(@RequestParam(value = "account", required = true) account: String,
                     @RequestParam(value = "password", required = true) password: String): Any {//接收数据
         val user = User(account, password, "", 0, "", "", "", "", "");
@@ -28,7 +28,7 @@ constructor(private val registerService: RegisterService) {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = ["/list"])
     fun getList(): Any {
         val list = (0..15).mapTo(ArrayList<String>()) { "测试数据" + it }
         return list
