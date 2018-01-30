@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -23,10 +24,18 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @RequestMapping("/login", method = [RequestMethod.POST])
     fun login(@RequestParam(value = "account", required = true) account: String,
               @RequestParam(value = "password", required = true) password: String,
-              httpServletResponse: HttpServletResponse): Any? {
-        tokenService.verifyAccount(account)
-        val cookie = Cookie("token", tokenService.findToken(account));
-        httpServletResponse.addCookie(cookie)
-        return loginService.returnResult(account, password)
+              httpServletResponse: HttpServletResponse,
+              httpServletRequest: HttpServletRequest): Any? {
+        val token = httpServletRequest.cookies
+        var result = loginService.returnResult(account, password);
+        if (token == null) {
+            tokenService.verifyAccount(account)
+            val cookie = Cookie("token", tokenService.findToken(account));
+            httpServletResponse.addCookie(cookie)
+        } else {
+            val versify = tokenService.verifyToken(httpServletRequest)
+            if (versify != null) result = versify
+        }
+        return result
     }
 }
