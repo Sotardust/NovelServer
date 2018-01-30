@@ -21,6 +21,7 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @RequestMapping("/get_accounts", method = [(RequestMethod.GET)])
     fun getAllAccounts(httpServletRequest: HttpServletRequest): Any {
         var reslut = tokenService.verifyToken(httpServletRequest)
+        println("loginService = ${loginService}")
         if (reslut == null) reslut = loginService.getAllAccount()
         return reslut
     }

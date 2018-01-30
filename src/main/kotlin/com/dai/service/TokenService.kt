@@ -26,6 +26,7 @@ constructor(val tokenMapper: TokenMapper) {
     val date = Date();
 
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
     // 自动生成token
     fun verifyToken(httpServletRequest: HttpServletRequest): Any? {
 
@@ -71,6 +72,7 @@ constructor(val tokenMapper: TokenMapper) {
     //验证是否是同一个用户
     fun verifyAccount(account: String) {
         // 查找所有账号
+        println("account = $account")
         val flag = tokenMapper.findAllAccount().any { account == it }
         if (flag) {
             tokenMapper.updateLogout("否", account)
