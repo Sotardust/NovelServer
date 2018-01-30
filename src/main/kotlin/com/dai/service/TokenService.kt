@@ -107,7 +107,7 @@ constructor(val tokenMapper: TokenMapper) {
                     strBuf.append(Integer.toHexString(0xff and encryption[i].toInt()))
                 }
             }
-            return strBuf.toString()
+            return strBuf.toString().substring(0,15)
         } catch (e: NoSuchAlgorithmException) {
             return ""
         } catch (e: UnsupportedEncodingException) {
