@@ -12,5 +12,4 @@ interface RegisterMapper {
     abstract fun insertData(user: User)
     abstract fun findAllAccount(): List<String>
     abstract fun findPassword(account: String): String
-
 }
