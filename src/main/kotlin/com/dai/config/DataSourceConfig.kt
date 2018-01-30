@@ -16,11 +16,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import javax.sql.DataSource
 
 @Configuration
-@MapperScan(basePackages = arrayOf("com.dai.dao"), sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = ["com.dai.dao"], sqlSessionFactoryRef = "sqlSessionFactory")
 
 //@EnableTransactionManagement
 // 自己添加的，指定配置文件
-@PropertySource(value = "classpath:application.properties", ignoreResourceNotFound = true)
+@PropertySource(value = ["classpath:application.properties"], ignoreResourceNotFound = true)
 class DataSourceConfig
 constructor() {
 
@@ -36,7 +36,7 @@ constructor() {
     @Autowired
     private var resourceLoader: ResourceLoader? = null
 
-    @Bean(name = arrayOf("dataSource"))
+    @Bean(name = ["dataSource"])
     fun settleDataSource(): DataSource {
 
         val dataSource = DruidDataSource()
@@ -59,12 +59,12 @@ constructor() {
         return dataSource
     }
 
-    @Bean(name = arrayOf("transactionManager"))
+    @Bean(name = ["transactionManager"])
     fun settleTransactionManager(): DataSourceTransactionManager {
         return DataSourceTransactionManager(settleDataSource())
     }
 
-    @Bean(name = arrayOf("sqlSessionFactory"))
+    @Bean(name = ["sqlSessionFactory"])
     @Throws(Exception::class)
     fun settleSqlSessionFactory(@Qualifier("dataSource") settleDataSource: DataSource): SqlSessionFactory {
         val sessionFactory = SqlSessionFactoryBean()
