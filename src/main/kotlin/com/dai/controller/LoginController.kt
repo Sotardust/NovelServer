@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
+import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -24,6 +25,8 @@ constructor(private val loginService: LoginService) {
               @RequestParam(value = "password", required = true) password: String,
               httpServletResponse: HttpServletResponse, httpServletRequest: HttpServletRequest): Any {
 
+        val cookie = Cookie("cookie", "cookieValue");
+        httpServletResponse.addCookie(cookie)
         println("httpServletRequest = ${httpServletRequest.cookies}")
 //        for (cookie in httpServletRequest.cookies){
 //            println("cookie = ${cookie.value}")
