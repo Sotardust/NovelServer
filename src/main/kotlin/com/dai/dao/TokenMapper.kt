@@ -15,6 +15,6 @@ interface TokenMapper {
     abstract fun findStartTime(token: String): String
     abstract fun findTime(token: String): String
     abstract fun findLogout(token: String): String
-    abstract fun updateToken(token: String): String
-    abstract fun updateLogout(token: String): String
+    abstract fun updateToken(token: String, logout: String, account: String)
+    abstract fun updateLogout(logout: String, account: String)
 }

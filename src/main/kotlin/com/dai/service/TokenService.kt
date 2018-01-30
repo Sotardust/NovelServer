@@ -1,4 +1,4 @@
-package com.dai.utils.token
+package com.dai.service
 
 import com.dai.bean.Token
 import com.dai.dao.TokenMapper
@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
+import kotlin.collections.HashMap
 
 
 /**
@@ -19,37 +20,41 @@ import javax.servlet.http.HttpServletRequest
  * 后续使用 单点验证sso
  */
 @Service
-open class TokenManager {
+class TokenService @Autowired
+constructor(val tokenMapper: TokenMapper) {
 
     val date = Date();
 
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    @Autowired
-    val tokenMapper: TokenMapper? = null
-
     // 自动生成token
-    fun findToken(account: String) {
+    fun verifyToken(httpServletRequest: HttpServletRequest): Any? {
 
+        println("httpServletRequest.requestedSessionId = ${httpServletRequest.requestedSessionId}")
+        println("httpServletRequest.requestedSessionId = ${httpServletRequest.cookies}")
+        val token = httpServletRequest.cookies[0].value
+        val result = HashMap<String, String>()
+        result["success"] = "0"
+        result["error"] = "登录时间过长为保证账号安全请重新登录"
         try {
-            val token = tokenMapper?.findToken(account)
-            if (token == null) insertTokenData(account)
-            else {
-                if ("否" == tokenMapper?.findLogout(token)) {
-                    val tableDate = tokenMapper?.findStartTime(token)
-                    val dt1 = simpleDateFormat.parse(tableDate)
-                    val dt2 = simpleDateFormat.parse(simpleDateFormat.format(date))
-                    val timeDif = Math.abs((dt2.time - dt1.time).toLong()).toInt()
-                    val constantTime = tokenMapper?.findTime(token)?.toInt()!! * 365 * 20 * 3600 * 1000
-//                    if (timeDif > constantTime) tokenMapper?.updateLogout(token)
+            if ("否" == tokenMapper.findLogout(token)) {
+                val tableDate = tokenMapper.findStartTime(token)
+                val dt1 = simpleDateFormat.parse(tableDate)
+                val dt2 = simpleDateFormat.parse(simpleDateFormat.format(date))
+                val timeDif = Math.abs((dt2.time - dt1.time).toLong()).toInt()
+                val constantTime = tokenMapper.findTime(token).toInt() * 365 * 20 * 3600 * 1000
+                return if (timeDif > constantTime) {
+                    val account = tokenMapper.findAccount(token)
+                    tokenMapper.updateToken(generateToken(), "否", account)
+                    result
                 } else {
-                    //更新数据
-                    tokenMapper?.updateLogout(token)
-                    return
+                    null
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            return result
         }
+        return null
     }
 
     //插入token数据
@@ -57,25 +62,27 @@ open class TokenManager {
         println("simpleDateFormat.format(date) = ${simpleDateFormat.format(date)}")
         val token = Token(data, generateToken(), simpleDateFormat.format(date), "1", "否")
         try {
-            tokenMapper?.insertTokenData(token)!!
+            tokenMapper.insertTokenData(token)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     //验证是否是同一个用户
-    fun verifyAccount(httpServletRequest: HttpServletRequest) {
-        val cookies = httpServletRequest.cookies
-        if (cookies != null)
-            for (cookie in cookies) {
-                println("cookie maxAge= ${cookie.maxAge}")
-                println("cookie comment= ${cookie.comment}")
-                println("cookie name= ${cookie.name}")
-                println("cookie value= ${cookie.value}")
-                println("cookie secure= ${cookie.secure}")
-            }
+    fun verifyAccount(account: String) {
+        // 查找所有账号
+        val flag = tokenMapper.findAllAccount().any { account == it }
+        if (flag) {
+            tokenMapper.updateLogout("否", account)
+        } else {
+            insertTokenData(account)
+        }
     }
 
+    //通过账号查找token
+    fun findToken(account: String): String {
+        return tokenMapper.findToken(account)
+    }
 
     //通过token 判断是那个用户
 

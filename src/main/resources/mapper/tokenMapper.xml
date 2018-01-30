@@ -3,23 +3,23 @@
 <mapper namespace="com.dai.dao.TokenMapper">
 
     <select id="findAllAccount" resultType="String">
-        SELECT account FROM user
+        SELECT account FROM token
     </select>
 
     <select id="findToken" parameterType="String" resultType="String">
-        SELECT token FROM token WHERE account =${account}
+        SELECT token FROM token WHERE account =#{account}
     </select>
     <select id="findAccount" parameterType="String" resultType="String">
-        SELECT account FROM token WHERE token =${token}
+        SELECT account FROM token WHERE token =#{token}
     </select>
     <select id="findStartTime" parameterType="String" resultType="String">
-        SELECT startTime FROM token WHERE token =${token}
+        SELECT startTime FROM token WHERE token =#{token}
     </select>
     <select id="findTime" parameterType="String" resultType="String">
-        SELECT "time" FROM token WHERE token =${token}
+        SELECT "time" FROM token WHERE token =#{token}
     </select>
     <select id="findLogout" parameterType="String" resultType="String">
-        SELECT logout FROM token WHERE token =${token}
+        SELECT logout FROM token WHERE token =#{token}
     </select>
 
     <insert id="insertTokenData" parameterType="com.dai.bean.Token" useGeneratedKeys="true">
@@ -28,9 +28,9 @@
     </insert>
 
     <update id="updateToken" parameterType="String">
-        UPDATE table token SET token = ${"?"} WHERE token =${token}
+        UPDATE table token SET token.token = #{token},token.logout = #{logout} WHERE account =#{account}
     </update>
     <update id="updateLogout" parameterType="String">
-        UPDATE table token SET logout = ${"?"} WHERE token =${token}
+        UPDATE table token SET token.logout = #{logout} WHERE account =#{account}
     </update>
 </mapper>
