@@ -33,35 +33,38 @@ constructor(val tokenMapper: TokenMapper) {
         println("httpServletRequest.requestedSessionId = ${httpServletRequest.requestedSessionId}")
         println("httpServletRequest.requestedSessionId = ${httpServletRequest.cookies}")
         val token = httpServletRequest.cookies[0].value
+        println("token = ${token}")
         val result = HashMap<String, String>()
         result["success"] = "0"
-        result["error"] = "登录时间过长为保证账号安全请重新登录"
+        result["error"] = "请登录后获取数据"
         try {
-            if ("否" == tokenMapper.findLogout(token)) {
+            val flag = tokenMapper.findAllToken().any { token == it }
+            return if (flag && "否" == tokenMapper.findLogout(token)) {
                 val tableDate = tokenMapper.findStartTime(token)
                 val dt1 = simpleDateFormat.parse(tableDate)
                 val dt2 = simpleDateFormat.parse(simpleDateFormat.format(date))
                 val timeDif = Math.abs((dt2.time - dt1.time).toLong()).toInt()
+                println("Integer.getInteger(tokenMapper.findTime(token)) = ${tokenMapper.findTime(token)}")
                 val constantTime = tokenMapper.findTime(token).toInt() * 365 * 20 * 3600 * 1000
-                return if (timeDif > constantTime) {
+                if (timeDif > constantTime) {
                     val account = tokenMapper.findAccount(token)
                     tokenMapper.updateToken(generateToken(), "否", account)
                     result
                 } else {
                     null
                 }
-            }
+            } else result
         } catch (e: Exception) {
             e.printStackTrace()
             return result
         }
-        return null
     }
 
     //插入token数据
-    fun insertTokenData(data: String) {
+    fun insertTokenData(account: String) {
         println("simpleDateFormat.format(date) = ${simpleDateFormat.format(date)}")
-        val token = Token(data, generateToken(), simpleDateFormat.format(date), "1", "否")
+        val token = Token(account, generateToken(), simpleDateFormat.format(date), "1", "否")
+
         try {
             tokenMapper.insertTokenData(token)
         } catch (e: Exception) {
@@ -75,7 +78,8 @@ constructor(val tokenMapper: TokenMapper) {
         println("account = $account")
         val flag = tokenMapper.findAllAccount().any { account == it }
         if (flag) {
-            tokenMapper.updateLogout("否", account)
+            val logout = "否"
+            tokenMapper.updateLogout(logout, account)
         } else {
             insertTokenData(account)
         }
@@ -107,7 +111,7 @@ constructor(val tokenMapper: TokenMapper) {
                     strBuf.append(Integer.toHexString(0xff and encryption[i].toInt()))
                 }
             }
-            return strBuf.toString().substring(0,15)
+            return strBuf.toString().substring(0, 15)
         } catch (e: NoSuchAlgorithmException) {
             return ""
         } catch (e: UnsupportedEncodingException) {

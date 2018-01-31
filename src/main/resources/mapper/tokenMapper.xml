@@ -6,6 +6,11 @@
         SELECT account
         FROM token
     </select>
+    <select id="findAllToken" resultType="String">
+        SELECT token
+        FROM token
+    </select>
+
 
     <select id="findToken" parameterType="String" resultType="String">
         SELECT token
@@ -23,7 +28,7 @@
         WHERE token = #{token}
     </select>
     <select id="findTime" parameterType="String" resultType="String">
-        SELECT "time"
+        SELECT time
         FROM token
         WHERE token = #{token}
     </select>
@@ -39,13 +44,13 @@
     </insert>
 
     <update id="updateToken" parameterType="String">
-        UPDATE table token
-        SET token.token = #{token}, token.logout = #{logout}
-        WHERE account = #{account}
+        UPDATE  token
+        SET token = #{0}, logout = #{1}
+        WHERE account = #{2}
     </update>
     <update id="updateLogout" parameterType="String">
-        UPDATE table token
-        SET token.logout = #{logout}
-        WHERE account = #{account}
+        UPDATE  token
+        SET logout = #{0}
+        WHERE account = #{1}
     </update>
 </mapper>

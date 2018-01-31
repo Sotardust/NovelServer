@@ -27,6 +27,9 @@ constructor(private val loginService: LoginService, private val tokenService: To
               httpServletResponse: HttpServletResponse,
               httpServletRequest: HttpServletRequest): Any? {
         val token = httpServletRequest.cookies
+
+        println("token LoginController = ${token}")
+        println("account LoginController = ${account}")
         var result = loginService.returnResult(account, password);
         if (token == null) {
             tokenService.verifyAccount(account)

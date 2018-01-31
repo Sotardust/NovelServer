@@ -26,9 +26,7 @@ constructor(private val registerService: RegisterService, private val tokenServi
     fun receiveData(@RequestParam(value = "account", required = true) account: String,
                     @RequestParam(value = "password", required = true) password: String, httpServletRequest: HttpServletRequest): Any {//接收数据
         val user = User(account, password, "", 0, "", "", "", "", "");
-        var reslut = tokenService.verifyToken(httpServletRequest)
-        if (reslut == null) reslut = registerService.backResult(user)
-        return reslut
+        return registerService.backResult(user)
     }
 
     @ResponseBody
