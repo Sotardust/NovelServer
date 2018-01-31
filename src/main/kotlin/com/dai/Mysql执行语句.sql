@@ -49,3 +49,23 @@
 # 解决步骤：首先，按照降序对结果集进行排序。第二步，使用LIMIT子句获得第n贵的产品。
 # (注意：偏移量从0开始，所以要指定从1开始，然后取一行记录）
 # SELECT productCode, productName, buyprice FROM  products ORDER BY buyprice DESC LIMIT 1, 1;
+
+# 查询有销售代表的客户，请使用IS NOT NULL运算符
+# SELECT customerName,country,salesrepemployeenumber FROM customers
+# WHERE salesrepemployeenumber IS NOT NULL ORDER BY customerName;
+
+# 要按姓氏按降序和名字按升序排序联系人，请在相应列中分别指定DESC和ASC
+# SELECT  contactLastname,  contactFirstname FROM customers
+# ORDER BY contactLastname DESC,contactFirstname ASC LIMIT 10;
+
+# ORDER BY子句允许使用FIELD()函数为列中的值定义自己的自定义排序顺序。
+# SELECT  orderNumber, status FROM  orders
+# ORDER BY FIELD(status,'In Process','On Hold','Cancelled','Resolved','Disputed','Shipped');
+
+# 为输出的标题分配一个有意义的列别名
+# SELECT CONCAT_WS(', ', lastName, firstname) AS `Full name`FROM employees;
+
+# 使用ORDER BY，GROUP BY和HAVING子句中的列别名来引用该列。
+# SELECT orderNumber `Order no.`, SUM(priceEach * quantityOrdered) total
+# FROM orderdetails GROUP BY `Order no.`HAVING total > 60000;
+
