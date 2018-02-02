@@ -39,3 +39,66 @@
 # WHERE
 #   orderNumber IS NULL;
 
+# 以下DELETE语句选择法国(France)的客户，按升序按信用额度(creditLimit)进行排序，并删除前5个客户：
+# DELETE FROM customers WHERE country = 'France' ORDER BY creditLimit LIMIT 5;
+
+#################### Mysql事务 start ########################
+-- start a new transaction
+start transaction;
+
+-- get latest order number
+select @orderNumber := max(orderNUmber)
+from orders;
+-- set new order number
+set @orderNumber = @orderNumber  + 1;
+
+-- insert a new order for customer 145
+insert into orders(orderNumber,
+                   orderDate,
+                   requiredDate,
+                   shippedDate,
+                   status,
+                   customerNumber)
+values(@orderNumber,
+       now(),
+       date_add(now(), INTERVAL 5 DAY),
+       date_add(now(), INTERVAL 2 DAY),
+       'In Process',
+       145);
+-- insert 2 order line items
+insert into orderdetails(orderNumber,
+                         productCode,
+                         quantityOrdered,
+                         priceEach,
+                         orderLineNumber)
+values(@orderNumber,'S18_1749', 30, '136', 1),
+  (@orderNumber,'S18_2248', 50, '55.09', 2);
+-- commit changes
+commit;
+
+-- get the new inserted order
+select * from orders a
+  inner join orderdetails b on a.ordernumber = b.ordernumber
+where a.ordernumber = @ordernumber;
+#################### Mysql事务 end ########################
+
+show PROCESSLIST ;
+SELECT CONNECTION_ID();
+SELECT  HOUR(now()),MINUTE(now()),second(now()) ;
+
+#################### 创建 Mysql临时表  start############################
+CREATE TEMPORARY TABLE top10customers
+  SELECT p.customerNumber,
+    c.customerName,
+    FORMAT(SUM(p.amount),2) total
+  FROM payments p
+    INNER JOIN customers c ON c.customerNumber = p.customerNumber
+  GROUP BY p.customerNumber
+  ORDER BY total DESC
+  LIMIT 10;
+
+# 查询临时表数据
+SELECT * FROM top10customers;
+# 删除临时表
+DROP TEMPORARY TABLE top10customers;
+#################### 创建 Mysql临时表  end############################
