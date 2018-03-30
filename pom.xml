@@ -97,7 +97,8 @@
 						<plugin>spring</plugin>
 					</compilerPlugins>
 					<jvmTarget>1.8</jvmTarget>
-				</configuration>
+                    <languageVersion>1.2</languageVersion>
+                </configuration>
 				<executions>
 					<execution>
 						<id>compile</id>

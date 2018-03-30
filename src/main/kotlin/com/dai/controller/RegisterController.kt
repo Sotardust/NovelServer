@@ -33,8 +33,8 @@ constructor(private val registerService: RegisterService, private val tokenServi
     @RequestMapping(value = ["/list"])
     fun getList(httpServletRequest: HttpServletRequest): Any {
         val list = (0..15).mapTo(ArrayList<String>()) { "测试数据" + it }
-        var reslut = tokenService.verifyToken(httpServletRequest)
-        if (reslut == null) reslut = list
-        return reslut
+//        var reslut = tokenService.verifyToken(httpServletRequest)
+//        if (reslut == null) reslut = list
+        return list
     }
 }

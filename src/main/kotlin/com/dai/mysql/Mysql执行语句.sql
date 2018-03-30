@@ -45,10 +45,10 @@
 # 要查询信用额度最高的前五名客户
 # SELECT customernumber, customername, creditlimit FROM customers ORDER BY creditlimit DESC LIMIT 5;
 
-# 使用MySQL LIMIT获得第n个最高值
+# 使用MySQL LIMIT 获得第n个最高值
 # 解决步骤：首先，按照降序对结果集进行排序。第二步，使用LIMIT子句获得第n贵的产品。
 # (注意：偏移量从0开始，所以要指定从1开始，然后取一行记录）
-# SELECT productCode, productName, buyprice FROM  products ORDER BY buyprice DESC LIMIT 1, 1;
+ SELECT productCode, productName, buyprice FROM  products ORDER BY buyprice DESC LIMIT 1, 1;
 
 # 查询有销售代表的客户，请使用IS NOT NULL运算符
 # SELECT customerName,country,salesrepemployeenumber FROM customers
