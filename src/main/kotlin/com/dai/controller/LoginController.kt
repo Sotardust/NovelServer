@@ -41,4 +41,59 @@ constructor(private val loginService: LoginService, private val tokenService: To
         }
         return result
     }
+
+    @ResponseBody
+    @RequestMapping("/no_sleep", method = [RequestMethod.GET])
+    fun getNoSleep(): Any? {
+        val result = HashMap<String, Any>()
+        result["data"] = "无睡眠时间"
+        return result
+    }
+
+    @ResponseBody
+    @RequestMapping("/sleep_two", method = [RequestMethod.GET])
+    fun getSleep2Second(): Any? {
+        val result = intArrayOf(20)
+
+        try {
+            for (i in 0..19) {
+                result[i] = i;
+            }
+            Thread.sleep(2000)
+        } catch (e: Exception) {
+
+        }
+        return result
+    }
+
+    @ResponseBody
+    @RequestMapping("/sleep_three", method = [RequestMethod.GET])
+    fun getSleep3Second(): Any? {
+        val strings = arrayOfNulls<String>(20)
+        try {
+            for (i in 0..19) {
+                strings[i] = "延迟3秒数据" + i
+            }
+            Thread.sleep(3000)
+        } catch (e: Exception) {
+
+        }
+
+        return strings;
+    }
+
+    @ResponseBody
+    @RequestMapping("/sleep_five", method = [RequestMethod.GET])
+    fun getSleep5Second(): Any? {
+        val strings = arrayOfNulls<String>(20)
+        try {
+            for (i in 0..19) {
+                strings[i] = "延迟5秒数据" + i
+            }
+            Thread.sleep(5000)
+        } catch (e: Exception) {
+
+        }
+        return strings
+    }
 }

@@ -5,9 +5,14 @@ package com.dai;
  */
 public class TestJava {
 
-    private void test(){
+    private void test() {
         for (int i = 0; i < 10; i++) {
             System.out.println("测试demo = " + i);
+        }
+
+        String[] strings = new String[20];
+        for (int i = 0; i < 10; i++) {
+            strings[i] = "数据" + i;
         }
     }
 }
