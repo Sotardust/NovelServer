@@ -1,5 +1,8 @@
 package com.dai;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * Created by dai on 2018/1/26.
  */
@@ -15,4 +18,6 @@ public class TestJava {
             strings[i] = "数据" + i;
         }
     }
+
+    ArrayList<File> files = new ArrayList<>();
 }
