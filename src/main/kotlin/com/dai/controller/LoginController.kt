@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
 import java.util.ArrayList
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.collections.HashMap
 import kotlin.collections.set
+
 
 /**
  * Created by dai on 2018/1/29.
@@ -109,7 +112,17 @@ constructor(private val loginService: LoginService, private val tokenService: To
         getFileList("/var/workfile/music")
         return files;
     }
+    @ResponseBody
+    @RequestMapping("/music/fushishanxia", method = [(RequestMethod.GET)])
+    fun getSingleSong(): InputStream {
+        return FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3")
+    }
 
+    @ResponseBody
+    @RequestMapping("/music/qiansixi", method = [(RequestMethod.GET)])
+    fun getSingleSong1(): InputStream {
+        return FileInputStream("/var/workfile/music/银临,Aki阿杰 - 牵丝戏.mp3")
+    }
 
     fun getFileList(path: String) {
         val file = File(path)
