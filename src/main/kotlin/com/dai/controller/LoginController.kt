@@ -2,7 +2,12 @@ package com.dai.controller
 
 import com.dai.service.LoginService
 import com.dai.service.TokenService
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -109,24 +114,42 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @RequestMapping("/getFiles", method = [(RequestMethod.GET)])
     fun getMusic(): Any {
         if (files.size > 0) files.clear()
-        getFileList("/var/workfile/music")
+//        getFileList("/var/workfile/music")
+        getFileList("E:\\music")
         return files;
     }
 
     @ResponseBody
     @RequestMapping("/music/fushishanxia", method = [(RequestMethod.GET)])
     fun getSingleSong(): InputStream {
+        val fileInput = FileInputStream("E:\\music\\陈奕迅 - 富士山下.mp3");
         val song = Song();
-        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
+//        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
+        song.fileInputStream = fileInput
+
+        fileInput.close()
         return song.fileInputStream
     }
 
     @ResponseBody
     @RequestMapping("/music/qiansixi", method = [(RequestMethod.GET)])
     fun getSingleSong1(): Any {
+
+        val fileInput = FileInputStream("E:\\music\\大壮 - 我们不一样.mp3");
+
         val song = Song();
-        song.fileInputStream =FileInputStream("/var/workfile/music/银临,Aki阿杰 - 牵丝戏.mp3");
-        return song.fileInputStream
+//        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
+        song.fileInputStream = fileInput
+
+        fileInput.close()
+        return ResponseEntity<ByteArray>(byteArrayOf(fileInput),HttpStatus.CREATED)
+    }
+
+
+
+    @Bean
+    fun objectMapper(): ObjectMapper {
+        return ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
     }
 
     fun getFileList(path: String) {
