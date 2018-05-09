@@ -33,7 +33,7 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @ResponseBody
     @RequestMapping("/getFiles", method = [(RequestMethod.GET)])
     fun getMusic(): Any {
-        getFileList("E:\\music")
+        getFileList("/var/workfile/music")
         return files;
     }
 
