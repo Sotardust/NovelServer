@@ -112,16 +112,21 @@ constructor(private val loginService: LoginService, private val tokenService: To
         getFileList("/var/workfile/music")
         return files;
     }
+
     @ResponseBody
     @RequestMapping("/music/fushishanxia", method = [(RequestMethod.GET)])
     fun getSingleSong(): InputStream {
-        return FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3")
+        val song = Song();
+        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
+        return song.fileInputStream
     }
 
     @ResponseBody
     @RequestMapping("/music/qiansixi", method = [(RequestMethod.GET)])
-    fun getSingleSong1(): InputStream {
-        return FileInputStream("/var/workfile/music/银临,Aki阿杰 - 牵丝戏.mp3")
+    fun getSingleSong1(): Any {
+        val song = Song();
+        song.fileInputStream =FileInputStream("/var/workfile/music/银临,Aki阿杰 - 牵丝戏.mp3");
+        return song.fileInputStream
     }
 
     fun getFileList(path: String) {
