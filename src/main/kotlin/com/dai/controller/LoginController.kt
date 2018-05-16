@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -122,8 +124,8 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @ResponseBody
     @RequestMapping("/music/fushishanxia", method = [(RequestMethod.GET)])
     fun getSingleSong(): InputStream {
-        val fileInput = FileInputStream("E:\\music\\陈奕迅 - 富士山下.mp3");
-        val song = Song();
+        val fileInput = FileInputStream("E:\\music\\陈奕迅 - 富士山下.mp3")
+        val song = Song()
 //        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
         song.fileInputStream = fileInput
 
@@ -134,17 +136,20 @@ constructor(private val loginService: LoginService, private val tokenService: To
     @ResponseBody
     @RequestMapping("/music/qiansixi", method = [(RequestMethod.GET)])
     fun getSingleSong1(): Any {
+        val filename = "富士山下样.mp3"
+        val headers = HttpHeaders()
+        headers.add("Content-Disposition", "attachment;filename=" + filename);
+//        filename = String(filename.("gbk"), "iso8859-1")
+        val fileInput = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3")
+        val b = ByteArray(fileInput.available())
+        fileInput.read(b)
+        headers.setContentDispositionFormData("attachment",filename)
+        headers.contentType = MediaType.APPLICATION_OCTET_STREAM
+        println("filename = $filename")
+        val response = ResponseEntity(b, headers, HttpStatus.OK);
 
-        val fileInput = FileInputStream("E:\\music\\大壮 - 我们不一样.mp3");
-
-        val song = Song();
-//        song.fileInputStream = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3");
-        song.fileInputStream = fileInput
-
-        fileInput.close()
-        return ResponseEntity<ByteArray>(byteArrayOf(fileInput),HttpStatus.CREATED)
+        return response
     }
-
 
 
     @Bean
