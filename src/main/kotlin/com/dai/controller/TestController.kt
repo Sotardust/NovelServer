@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest
 class TestController @Autowired
 constructor(private val loginService: LoginService, private val tokenService: TokenService) {
 
-    var files = ArrayList<File>()
+
 
     @ResponseBody
     @RequestMapping("/get_accounts", method = [(RequestMethod.GET)])
@@ -30,37 +30,5 @@ constructor(private val loginService: LoginService, private val tokenService: To
         return reslut
     }
 
-    @ResponseBody
-    @RequestMapping("/getFiles", method = [(RequestMethod.GET)])
-    fun getMusic(): Any {
-        getFileList("E:\\music")
-        return files;
-    }
 
-
-    fun getFileList(path: String) {
-        val file = File(path)
-        try {
-            when {
-                file.isDirectory -> {
-                    val fs = file.listFiles()
-                    (0..fs.size - 3)
-                            .map { fs[it].absolutePath }
-                            .forEach {
-                                getFileList(it)
-                            }
-                }
-                file.isFile -> {
-                    val fName = file.absoluteFile;
-                    files.add(fName)
-                    println("fName.name = ${fName.name}")
-                    println("fName.totalSpace = ${fName.totalSpace}")
-                    println("fName.length = ${fName.length()}")
-                }
-                else -> System.out.println("路径不正确!")
-            }
-        } catch (e: Exception) {
-            println("e.message = $e")
-        }
-    }
 }
