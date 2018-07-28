@@ -1,5 +1,9 @@
 package com.dai
 
+import com.dai.designpatterns.decoratorpattern.Beverage
+import com.dai.designpatterns.decoratorpattern.DarkRoast
+import com.dai.designpatterns.decoratorpattern.Espresso
+import com.dai.designpatterns.decoratorpattern.Mocha
 import com.dai.designpatterns.observerpattern.CurrentConditionsDisplay
 import com.dai.designpatterns.observerpattern.StatisticsDisplay
 import com.dai.designpatterns.observerpattern.ThirdPartyDisplay
@@ -24,7 +28,8 @@ class NovelApplicationTests {
     }
 
     @Test
-    fun main() {
+    fun testStrategy() {
+        //策略模式 测试用例
         val model = ModelDuck()
 
         model.performFly()
@@ -34,13 +39,29 @@ class NovelApplicationTests {
 
     @Test
     fun testObserver() {
+        //观察者模式 测试用例
         val weatherData = WeatherData()
         val currentConditionsDisplay = CurrentConditionsDisplay(weatherData)
         val statisticsDisplay = StatisticsDisplay(weatherData)
         val thirdPartyDisplay = ThirdPartyDisplay(weatherData)
 
-        weatherData.setMeasurements(80f,65f,30.4f)
-        weatherData.setMeasurements(82f,70f,32.4f)
-        weatherData.setMeasurements(88f,79f,36.5f)
+        weatherData.setMeasurements(80f, 65f, 30.4f)
+        weatherData.setMeasurements(82f, 70f, 32.4f)
+        weatherData.setMeasurements(88f, 79f, 36.5f)
+
+    }
+
+    @Test
+    fun testDecorator() {
+
+        //装饰者测试用例
+        val beverage = Espresso()
+        println("beverage.getDescription()  = " + beverage.description + "$ , beverage.cost()" + beverage.cost())
+
+        var beverage1: Beverage = DarkRoast()
+        beverage1 = Mocha(beverage1)
+        beverage1 = Mocha(beverage1)
+        beverage1 = Mocha(beverage1)
+        println("beverage1.getDescription()  = " + beverage1.getDescription() + "$ , beverage1.cost()" + beverage1.cost())
     }
 }
