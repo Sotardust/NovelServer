@@ -53,7 +53,6 @@ class NovelApplicationTests {
 
     @Test
     fun testDecorator() {
-
         //装饰者测试用例
         val beverage = Espresso()
         println("beverage.getDescription()  = " + beverage.description + "$ , beverage.cost()" + beverage.cost())
