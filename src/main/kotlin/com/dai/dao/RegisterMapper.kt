@@ -1,6 +1,7 @@
 package com.dai.dao
 
 import com.dai.bean.User
+import com.dai.bean.UserInfo
 import org.apache.ibatis.annotations.Mapper
 
 /**
@@ -8,8 +9,8 @@ import org.apache.ibatis.annotations.Mapper
  */
 @Mapper
 interface RegisterMapper {
-    abstract fun getIds(): Int
-    abstract fun insertData(user: User)
-    abstract fun findAllAccount(): List<String>
-    abstract fun findPassword(account: String): String
+    fun getUserCount(): Int
+    fun insertUserInfo(user: UserInfo)
+    fun getAllAcounts(): List<String>
+    fun findPassword(account: String): String
 }

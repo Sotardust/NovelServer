@@ -1,8 +1,8 @@
 package com.dai.controller
 
-import com.dai.bean.User
-import com.dai.service.RegisterService
+import com.dai.bean.UserInfo
 import com.dai.service.TokenService
+import com.dai.service.login.RegisterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,16 +17,13 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("/mobile")
-class RegisterController
-@Autowired
+class RegisterController @Autowired
 constructor(private val registerService: RegisterService, private val tokenService: TokenService) {
 
     @ResponseBody
     @RequestMapping(value = ["/register"], method = [(RequestMethod.POST)])
-    fun receiveData(@RequestParam(value = "account", required = true) account: String,
-                    @RequestParam(value = "password", required = true) password: String, httpServletRequest: HttpServletRequest): Any {//接收数据
-        val user = User(account, password, "", 0, "", "", "", "", "");
-        return registerService.backResult(user)
+    fun receiveData(@RequestParam(value = "userInfo", required = true) userInfo: UserInfo, httpServletRequest: HttpServletRequest): Any {//接收数据
+        return registerService.registerResult(userInfo)
     }
 
     @ResponseBody

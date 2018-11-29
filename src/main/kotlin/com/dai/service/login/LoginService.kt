@@ -1,4 +1,4 @@
-package com.dai.service
+package com.dai.service.login
 
 import com.dai.dao.RegisterMapper
 import org.springframework.beans.factory.annotation.Autowired

@@ -19,5 +19,7 @@ public class TestJava {
         }
     }
 
+    boolean flag = true ;
+    String value = flag?"de":"fafdas";
     ArrayList<File> files = new ArrayList<>();
 }

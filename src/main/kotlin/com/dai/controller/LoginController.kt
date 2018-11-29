@@ -1,6 +1,6 @@
 package com.dai.controller
 
-import com.dai.service.LoginService
+import com.dai.service.login.LoginService
 import com.dai.service.TokenService
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature

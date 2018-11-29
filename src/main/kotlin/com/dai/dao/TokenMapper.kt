@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper
  */
 @Mapper
 interface TokenMapper {
+
     abstract fun findAllAccount(): List<String>
     abstract fun findAllToken(): List<String>
     abstract fun insertTokenData(token: Token): Boolean
