@@ -22,7 +22,7 @@ fun getFileList(path: String) {
         when {
             file.isDirectory -> {
                 val fs = file.listFiles()
-                (0..fs.size-3)
+                (0..fs.size - 3)
                         .map { fs[it].absolutePath }
                         .forEach {
                             getFileList(it)
