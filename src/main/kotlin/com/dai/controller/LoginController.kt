@@ -18,7 +18,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 import java.util.ArrayList
-import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.collections.HashMap
@@ -31,7 +30,7 @@ import kotlin.collections.set
 @Controller
 @RequestMapping("/mobile")
 class LoginController @Autowired
-constructor(private val loginService: LoginService, private val tokenService: TokenService) {
+constructor(private val loginService: LoginService) {
 
     @ResponseBody
     @RequestMapping("/login", method = [RequestMethod.POST])
@@ -44,14 +43,6 @@ constructor(private val loginService: LoginService, private val tokenService: To
         println("token LoginController = ${token}")
         println("account LoginController = ${account}")
         var result = loginService.returnResult(account, password);
-        if (token == null) {
-            tokenService.verifyAccount(account)
-            val cookie = Cookie("token", tokenService.findToken(account));
-            httpServletResponse.addCookie(cookie)
-        } else {
-            val versify = tokenService.verifyToken(httpServletRequest)
-            if (versify != null) result = versify
-        }
         return result
     }
 
