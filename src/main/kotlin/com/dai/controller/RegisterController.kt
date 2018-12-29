@@ -2,7 +2,6 @@ package com.dai.controller
 
 import com.dai.bean.UserInfo
 import com.dai.service.RegisterService
-import com.dai.service.TokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping("/message")
 class RegisterController
 @Autowired
-constructor(private val registerService: RegisterService, private val tokenService: TokenService) {
+constructor(private val registerService: RegisterService) {
 
     @ResponseBody
     @RequestMapping(value = ["/register"], method = [(RequestMethod.POST)])
