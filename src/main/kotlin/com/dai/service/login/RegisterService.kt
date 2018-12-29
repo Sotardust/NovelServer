@@ -1,5 +1,6 @@
-package com.dai.service.login
+package com.dai.service
 
+import com.dai.bean.User
 import com.dai.bean.UserInfo
 import com.dai.dao.RegisterMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +15,7 @@ class RegisterService @Autowired
 constructor(private val registerMapper: RegisterMapper) {
 
     //用户数据是否插入成功
-    fun insertUserInfo(user: UserInfo): Boolean {
+    fun insertData(user: UserInfo): Boolean {
         try {
             registerMapper.insertUserInfo(user)
         } catch (e: Exception) {
@@ -27,26 +28,27 @@ constructor(private val registerMapper: RegisterMapper) {
     /**
      * 返回注册结果
      */
-    fun registerResult(user: UserInfo): Any {
+    fun backResult(user: UserInfo): Any {
+        println("registerMapper.findAllAccount() = ${registerMapper.getAllAccount()}")
         // 查找所有账号
-        val isContain = registerMapper.getAllAcounts().any { user.account == it }
+        val flag = registerMapper.getAllAccount().any { user.name == it }
+
         val result = HashMap<String, String>()
-        if (isContain) {
+        if (flag) {
             result["success"] = "0"
             result["error"] = "该账号已被注册"
             return result
         }
-        val bool = insertUserInfo(user);
+        val bool = insertData(user);
         result["success"] = if (bool) "1" else "0"
         result["error"] = if (bool) "" else "注册失败"
         return result
-
     }
 
     /**
-     * 返回数据库中用户个数
+     * 获取所有用户个数
      */
-    fun getUserCount(): Int {
-        return registerMapper.getUserCount()
+    fun getAllCount(): Int {
+        return registerMapper.getAllCount()
     }
 }

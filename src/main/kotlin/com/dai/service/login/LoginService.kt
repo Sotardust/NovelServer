@@ -12,9 +12,9 @@ class LoginService @Autowired
 constructor(private val registerMapper: RegisterMapper) {
 
     // 返回登录结果
-    fun returnResult(account: String, password: String): Any {
+    fun returnResult(name: String, password: String): Any {
         val result = HashMap<String, String>()
-        val flag = registerMapper.findAllAccount().any { account == it }
+        val flag = registerMapper.getAllAccount().any { name == it }
         if (!flag) {
             result["success"] = "0";
             result["error"] = "用户名错误";
@@ -24,7 +24,7 @@ constructor(private val registerMapper: RegisterMapper) {
             return result
         }
         // 根据账号查找该用户密码
-        val pwd = registerMapper.findPassword(account)
+        val pwd = registerMapper.findPassword(name)
         if (pwd == password) {
             result["success"] = "1"
             result["error"] = ""
@@ -37,6 +37,6 @@ constructor(private val registerMapper: RegisterMapper) {
 
     // 获取所有账号
     fun getAllAccount(): Any {
-        return registerMapper.findAllAccount();
+        return registerMapper.getAllAccount();
     }
 }

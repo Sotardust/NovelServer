@@ -2,23 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dai.dao.RegisterMapper">
 
-    <select id="getUserCount" resultType="int">
+    <select id="getAllCount" resultType="int">
         SELECT count(userInfo.id)
         FROM userInfo
     </select>
 
-    <select id="getAllAcounts" resultType="String">
-        select account from userInfo
+    <select id="getAllAccount" resultType="String">
+        SELECT name FROM userInfo
     </select>
 
     <insert id="insertUserInfo" useGeneratedKeys="true">
-        insert into userInfo (account, password,number,registerTime)
-        value (#{account}, #{password}, #{number}, #{registerTime})
+        INSERT INTO userInfo (name, password, number, registerTime)
+        VALUES (#{name}, #{password}, #{number}, #{registerTime})
     </insert>
 
     <select id="findPassword" parameterType="String" resultType="String">
-        select password from userInfo where account = #{account}
+        SELECT password FROM userInfo WHERE name = #{name}
     </select>
-
 
 </mapper>

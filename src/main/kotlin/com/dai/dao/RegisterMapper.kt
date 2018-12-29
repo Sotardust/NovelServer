@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Mapper
  */
 @Mapper
 interface RegisterMapper {
-    fun getUserCount(): Int
-    fun insertUserInfo(user: UserInfo)
-    fun getAllAcounts(): List<String>
-    fun findPassword(account: String): String
+    abstract fun getAllCount(): Int
+    abstract fun insertUserInfo(user: UserInfo)
+    abstract fun getAllAccount(): List<String>
+    abstract fun findPassword(account: String): String
 }
