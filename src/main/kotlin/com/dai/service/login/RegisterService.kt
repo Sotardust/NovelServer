@@ -1,6 +1,5 @@
 package com.dai.service
 
-import com.dai.bean.User
 import com.dai.bean.UserInfo
 import com.dai.dao.RegisterMapper
 import org.springframework.beans.factory.annotation.Autowired

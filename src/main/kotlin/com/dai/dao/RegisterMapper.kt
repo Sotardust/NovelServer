@@ -1,6 +1,5 @@
 package com.dai.dao
 
-import com.dai.bean.User
 import com.dai.bean.UserInfo
 import org.apache.ibatis.annotations.Mapper
 
