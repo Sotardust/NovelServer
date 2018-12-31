@@ -3,21 +3,24 @@
 <mapper namespace="com.dai.dao.RegisterMapper">
 
     <select id="getAllCount" resultType="int">
-        SELECT count(userInfo.id)
-        FROM userInfo
+        SELECT count(person.id)
+        FROM person
     </select>
 
     <select id="getAllAccount" resultType="String">
-        SELECT name FROM userInfo
+        SELECT name
+        FROM person
     </select>
 
-    <insert id="insertUserInfo" useGeneratedKeys="true">
-        INSERT INTO userInfo (name, password, number, registerTime)
-        VALUES (#{name}, #{password}, #{number}, #{registerTime})
+    <insert id="insertPerson" useGeneratedKeys="true">
+        INSERT INTO person (name, person_id, password, number, sex, age, register_time)
+        VALUES (#{name}, #{personId}, #{password}, #{number}, #{sex}, #{age}, #{registerTime})
     </insert>
 
     <select id="findPassword" parameterType="String" resultType="String">
-        SELECT password FROM userInfo WHERE name = #{name}
+        SELECT password
+        FROM person
+        WHERE name = #{name}
     </select>
 
 </mapper>

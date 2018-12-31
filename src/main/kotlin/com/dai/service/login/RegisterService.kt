@@ -1,23 +1,28 @@
-package com.dai.service
+package com.dai.service.login
 
-import com.dai.bean.UserInfo
+import com.alibaba.fastjson.JSON
+import com.dai.bean.Person
+import com.dai.bean.model.LoginModel
 import com.dai.dao.RegisterMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.sql.SQLException
 import java.util.*
+import kotlin.math.log
 
 /**
  * Created by dai on 2018/1/25.
  */
 @Service
 class RegisterService @Autowired
-constructor(private val registerMapper: RegisterMapper) {
+constructor(val registerMapper: RegisterMapper) {
+
 
     //用户数据是否插入成功
-    fun insertData(user: UserInfo): Boolean {
+    fun insertData(person: Person): Boolean {
         try {
-            registerMapper.insertUserInfo(user)
-        } catch (e: Exception) {
+            registerMapper.insertPerson(person)
+        } catch (e: SQLException) {
             println("e.cause.toString() = ${e.cause.toString()}")
             return false
         }
@@ -26,22 +31,54 @@ constructor(private val registerMapper: RegisterMapper) {
 
     /**
      * 返回注册结果
+     *
+     * @param person Person实体类
      */
-    fun backResult(user: UserInfo): Any {
-        println("registerMapper.findAllAccount() = ${registerMapper.getAllAccount()}")
-        // 查找所有账号
-        val flag = registerMapper.getAllAccount().any { user.name == it }
+    fun registerResult(person: Person): String {
 
-        val result = HashMap<String, String>()
+        // 查找所有账号
+        val flag = registerMapper.getAllAccount().any { person.name == it }
+        val loginModel = LoginModel()
         if (flag) {
-            result["success"] = "0"
-            result["error"] = "该账号已被注册"
-            return result
+            loginModel.code = 0
+            loginModel.msg = "该账号已被注册"
+            return JSON.toJSONString(loginModel)
         }
-        val bool = insertData(user);
-        result["success"] = if (bool) "1" else "0"
-        result["error"] = if (bool) "" else "注册失败"
-        return result
+        val bool = insertData(person);
+        loginModel.code = if (bool) 0 else 1
+        loginModel.msg = if (bool) "注册成功" else "注册失败"
+        return JSON.toJSONString(loginModel)
+    }
+
+    /**
+     *
+     * 返回登录结果
+     *
+     * @param name  姓名
+     * @param password 密码
+     */
+    fun loginResult(name: String, password: String): String {
+
+        val loginModel = LoginModel()
+        try {
+
+            val pd = registerMapper.findPassword(name)
+            if (pd == null) {
+                loginModel.code = 1
+                loginModel.msg = "该账号未注册";
+                return JSON.toJSONString(loginModel)
+            }
+
+            val flag = password.equals(pd)
+            loginModel.code = if (flag) 0 else 1
+            loginModel.msg = if (flag) "登录成功" else "密码错误"
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            loginModel.code = -1
+            loginModel.msg = "服务器数据异常"
+        }
+
+        return JSON.toJSONString(loginModel)
     }
 
     /**

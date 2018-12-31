@@ -1,7 +1,8 @@
 package com.dai.controller
 
+import com.dai.bean.Person
 import com.dai.bean.UserInfo
-import com.dai.service.RegisterService
+import com.dai.service.login.RegisterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,10 +22,28 @@ class RegisterController
 constructor(private val registerService: RegisterService) {
 
     @ResponseBody
+    @RequestMapping(value = ["/login"], method = [(RequestMethod.POST)])
+    fun login(@RequestParam(value = "name", required = true) name: String,
+              @RequestParam(value = "password", required = true) password: String,
+              httpServletRequest: HttpServletRequest): Any {//接收数据
+        return registerService.loginResult(name, password)
+
+    }
+
+    @ResponseBody
     @RequestMapping(value = ["/register"], method = [(RequestMethod.POST)])
-    fun receiveData(@RequestParam(value = "userInfo", required = true) user: UserInfo,
-                    httpServletRequest: HttpServletRequest): Any {//接收数据
-        return registerService.backResult(user)
+    fun register(@RequestParam(value = "name", required = true) name: String,
+                 @RequestParam(value = "password", required = true) password: String,
+                 @RequestParam(value = "register_time", required = true) registerTime: String,
+                 httpServletRequest: HttpServletRequest): Any {//接收数据
+
+        val number = "00000000000"
+        val sex = "男"
+        val age = 22
+        // 人员id 取 时间戳最后6位数做为人员ID
+        val personId = registerTime.substring(registerTime.length - 8, registerTime.length).toLong()
+        val person = Person(name, personId, password, number, sex, age, registerTime = registerTime.toLong())
+        return registerService.registerResult(person)
     }
 
     @ResponseBody
@@ -34,12 +53,6 @@ constructor(private val registerService: RegisterService) {
         val list = (0..15).mapTo(ArrayList<String>()) {
             "测试数据" + it
         }
-        for (it in 0..15) {
-            val userInfo = UserInfo("xiaoming" + it, "123456", it.toString(), currentTime + it.toLong())
-            registerService.insertData(userInfo)
-        }
-//        var reslut = tokenService.verifyToken(httpServletRequest)
-//        if (reslut == null) reslut = list
         return list
     }
 }

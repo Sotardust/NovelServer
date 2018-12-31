@@ -63,4 +63,9 @@ class NovelApplicationTests {
         beverage1 = Mocha(beverage1)
         println("beverage1.getDescription()  = " + beverage1.getDescription() + "$ , beverage1.cost()" + beverage1.cost())
     }
+
+    @Test
+    fun testRegister() {
+
+    }
 }
