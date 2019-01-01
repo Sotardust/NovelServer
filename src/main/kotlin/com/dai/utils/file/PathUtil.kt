@@ -15,14 +15,16 @@ object PathUtil {
     /**
      * 以包名作为文件总路径
      */
-    //    private static final String PATH = Environment.getExternalStorageDirectory()
-    //            + File.separator + BuildConfig.APPLICATION_ID + File.separator;
-    private val PATH =Thread.currentThread().contextClassLoader.getResource("")!!.toString() ;
+//    private val PATH =Thread.currentThread().contextClassLoader.getResource("")!!.toString() ;
 
+    //windows测试路径
+    private val PATH = "F:\\testmusic\\"
+//    //Linux测试路径
+//    private val PATH  = "/var/workfile/music/"
     /**
      * 数据文件路径
      */
-    val MUSIC_PATH = PATH + "data" + File.separator
+    open val MUSIC_PATH = PATH + "music" + File.separator
 
     /**
      * 日志路径

@@ -1,5 +1,6 @@
 package com.dai
 
+import com.dai.utils.file.FileUtil
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -11,8 +12,9 @@ import java.io.File
 class NovelApplication
 
 fun main(args: Array<String>) {
-    println("hello kotlin")
+
     SpringApplication.run(NovelApplication::class.java, *args)
+    FileUtil.createLogFile();
     println("run successful")
 }
 

@@ -1,6 +1,7 @@
 package com.dai.utils.file
 
 
+import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
@@ -9,8 +10,7 @@ import java.util.logging.Logger
 
 object FileUtil {
 
-    private val TAG = "FileUtil"
-    private val logger = Logger.getLogger(TAG)
+    private val logger = Logger.getLogger(FileUtil.javaClass.name)
 
     /**
      * 日志文件名称

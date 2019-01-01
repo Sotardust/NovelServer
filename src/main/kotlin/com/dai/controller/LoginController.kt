@@ -130,7 +130,8 @@ constructor(private val loginService: LoginService) {
         val headers = HttpHeaders()
         headers.add("Content-Disposition", "attachment;filename=" + filename);
 //        filename = String(filename.("gbk"), "iso8859-1")
-        val fileInput = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3")
+//        val fileInput = FileInputStream("/var/workfile/music/陈奕迅 - 富士山下.mp3")
+        val fileInput = FileInputStream("F:\\testmusic")
         val b = ByteArray(fileInput.available())
         fileInput.read(b)
         headers.setContentDispositionFormData("attachment",filename)

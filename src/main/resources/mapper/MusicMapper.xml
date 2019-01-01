@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dai.dao.MusicMapper">
+
+
+    <select id="getAllMusics" resultType="com.dai.bean.music.MusicLibrary">
+        SELECT *
+        FROM music_library
+    </select>
+
+    <insert id="insertMusicLibrary">
+        INSERT INTO music_library (music_id, name, path, type, duration)
+        VALUES (#{musicId}, #{name}, #{path}, #{type}, #{duration})
+    </insert>
+
+</mapper>
