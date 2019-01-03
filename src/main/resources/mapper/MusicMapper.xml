@@ -13,4 +13,8 @@
         VALUES (#{musicId}, #{name}, #{path}, #{type}, #{duration})
     </insert>
 
+    <select id="getAllNames" resultType="String">
+        SELECT name
+        FROM music_library
+    </select>
 </mapper>

@@ -23,4 +23,10 @@
         WHERE name = #{name}
     </select>
 
+    <select id="findPersonId" parameterType="String" resultType="Int">
+        SELECT person_id
+        FROM person
+        WHERE name = #{name}
+    </select>
+
 </mapper>

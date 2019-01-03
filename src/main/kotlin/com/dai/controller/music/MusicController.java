@@ -26,8 +26,6 @@ public class MusicController {
     private final Logger logger = Logger.getLogger(MusicController.class);
 
     private final MusicService musicService;
-    private int anInt = 0;
-
 
     @Autowired
     public MusicController(MusicService musicService) {
@@ -39,7 +37,7 @@ public class MusicController {
      * 批量上传音乐文件或上传单个文件
      *
      * @param files 文件集合
-     * @return BaseModel<ArrayList       <       String>>
+     * @return BaseModel
      */
     @ResponseBody
     @RequestMapping(value = "/uploadmusic", method = RequestMethod.POST)
@@ -55,6 +53,7 @@ public class MusicController {
                 long musicId = id + i;
                 final File file = new File(path);
                 final String name = file.getName();
+                if (musicService.isExist(name)) continue; //若已经存在则不进行保存
                 logger.info(name);
                 final String type = name.split("\\.")[1];
                 final String duration = "";

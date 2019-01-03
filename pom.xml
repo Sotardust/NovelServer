@@ -41,6 +41,18 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.54</version>
 		</dependency>
+
+		<!-- springboot - Redis -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+		<!--</dependency>-->
+		<!--&lt;!&ndash;spring session 与redis应用基本环境配置,需要开启redis后才可以使用，不然启动Spring boot会报错 &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.session</groupId>-->
+			<!--<artifactId>spring-session-data-redis</artifactId>-->
+		<!--</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

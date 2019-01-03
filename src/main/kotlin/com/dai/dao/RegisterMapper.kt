@@ -12,4 +12,5 @@ interface RegisterMapper {
     fun insertPerson(person: Person)
     fun getAllAccount(): List<String>
     fun findPassword(account: String): String
+    fun findPersonId(account: String): Int
 }

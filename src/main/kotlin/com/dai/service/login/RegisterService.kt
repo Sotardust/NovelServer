@@ -51,6 +51,18 @@ constructor(val registerMapper: RegisterMapper) {
     }
 
     /**
+     * 查找人员对应id
+     */
+    fun findPersonId(name: String): Int {
+        try {
+            return registerMapper.findPersonId(name)
+        } catch (e: SQLException) {
+
+        }
+        return 0
+    }
+
+    /**
      *
      * 返回登录结果
      *
