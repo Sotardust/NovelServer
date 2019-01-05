@@ -3,15 +3,15 @@
 <mapper namespace="com.dai.dao.StatusMapper">
 
     <!--<resultMap id="com.dai.bean.OnlineStatus" type="OnlineStatusResultMap">-->
-        <!--<result column="person_id" property="personId"/>-->
-        <!--<result column="session_id" property="sessionId"/>-->
-        <!--<result column="status" property="status"/>-->
+    <!--<result column="person_id" property="personId"/>-->
+    <!--<result column="session_id" property="sessionId"/>-->
+    <!--<result column="status" property="status"/>-->
     <!--</resultMap>-->
 
     <!--<parameterMap id="com.dai.bean.OnlineStatus" type="OnlineStatusParameterMap">-->
-        <!--<parameter property="personId" resultMap="OnlineStatusResultMap"/>-->
-        <!--<parameter property="sessionId" resultMap="OnlineStatusResultMap"/>-->
-        <!--<parameter property="status" resultMap="OnlineStatusResultMap"/>-->
+    <!--<parameter property="personId" resultMap="OnlineStatusResultMap"/>-->
+    <!--<parameter property="sessionId" resultMap="OnlineStatusResultMap"/>-->
+    <!--<parameter property="status" resultMap="OnlineStatusResultMap"/>-->
     <!--</parameterMap>-->
 
     <insert id="insertOnlineStatus">
@@ -24,6 +24,15 @@
         FROM online_status
         WHERE person_id = #{personId}
     </select>
+    <select id="findSessionList" resultType="String">
+        select session_id
+        from online_status
+    </select>
+    <select id="getPersonId" parameterType="String" resultType="Integer">
+        select person_id
+        from online_status
+        where session_id = #{sessionId}
+    </select>
 
     <update id="updateStatus">
         update online_status
@@ -32,5 +41,12 @@
         where person_id = #{personId}
     </update>
 
+
+    <!--<update id="updateStatus" statementType="STATEMENT">-->
+    <!--update online_status-->
+    <!--set session_id =#{sessionId},-->
+    <!--status     = #{status}-->
+    <!--where person_id = #{personId}-->
+    <!--</update>-->
 
 </mapper>

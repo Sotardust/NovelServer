@@ -8,7 +8,7 @@
         FROM music_library
     </select>
 
-    <insert id="insertMusicLibrary">
+    <insert id="insertMusicLibrary" useGeneratedKeys="true">
         INSERT INTO music_library (music_id, name, path, type, duration)
         VALUES (#{musicId}, #{name}, #{path}, #{type}, #{duration})
     </insert>
@@ -16,5 +16,27 @@
     <select id="getAllNames" resultType="String">
         SELECT name
         FROM music_library
+    </select>
+
+    <select id="getMusicId" resultType="Long" parameterType="String">
+        SELECT music_id
+        FROM music_library
+        where name = #{name}
+    </select>
+    <select id="getCloudMusics" resultType="com.dai.bean.music.CloudMusic" parameterType="Integer">
+        SELECT *
+        FROM cloud_music
+        where person_id = #{personId}
+    </select>
+
+    <insert id="insertCloudMusic" useGeneratedKeys="true">
+        INSERT INTO cloud_music (person_id, music_id, name, path, type, duration)
+        VALUES (#{personId}, #{musicId}, #{name}, #{path}, #{type}, #{duration})
+    </insert>
+
+    <select id="getNames" resultType="String" parameterType="String">
+        SELECT name
+        FROM cloud_music
+        where person_id = #{personId}
     </select>
 </mapper>

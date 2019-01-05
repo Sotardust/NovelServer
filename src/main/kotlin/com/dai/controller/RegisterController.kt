@@ -1,9 +1,9 @@
+@file:Suppress("DEPRECATION")
+
 package com.dai.controller
 
 import com.dai.bean.OnlineStatus
 import com.dai.bean.Person
-import com.dai.bean.UserInfo
-import com.dai.dao.StatusMapper
 import com.dai.service.StatusService
 import com.dai.service.login.RegisterService
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpSession
 
 /**
  * Created by dai on 2018/1/25.
@@ -36,13 +35,11 @@ constructor(private val registerService: RegisterService, private val statusServ
             val onlineStatus = OnlineStatus()
             val httpSession = httpServletRequest.getSession(true)
             val sessionId = statusService.findSessionId(personId.toString())
-            println("sessionId = [${sessionId}]]")
             onlineStatus.personId = personId
             onlineStatus.status = 0
             onlineStatus.aliveTime = 60L
             onlineStatus.loginTime = System.currentTimeMillis()
             onlineStatus.sessionId = httpSession.id
-
             if (sessionId != null) {
                 statusService.updateStatus(onlineStatus)
             } else {
@@ -69,13 +66,4 @@ constructor(private val registerService: RegisterService, private val statusServ
         return registerService.registerResult(person)
     }
 
-    @ResponseBody
-    @RequestMapping(value = ["/list"])
-    fun getList(httpServletRequest: HttpServletRequest): Any {
-        val currentTime = System.currentTimeMillis()
-        val list = (0..15).mapTo(ArrayList<String>()) {
-            "测试数据" + it
-        }
-        return list
-    }
 }

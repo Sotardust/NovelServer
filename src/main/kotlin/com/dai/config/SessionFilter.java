@@ -1,19 +1,26 @@
 package com.dai.config;
 
+import com.alibaba.fastjson.JSON;
+import com.dai.bean.model.BaseModel;
+import com.dai.dao.StatusMapper;
+import com.dai.service.StatusService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Enumeration;
+import java.util.List;
 
 @WebFilter(filterName = "sessionFilter", urlPatterns = {"/*"})
 public class SessionFilter implements Filter {
+
+
+    @Autowired
+    private StatusMapper statusMapper;
 
     private final Logger logger = Logger.getLogger(SessionFilter.class);
     String[] includeUrls = new String[]{"login", "register"};
@@ -28,10 +35,22 @@ public class SessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(true);
         String uri = request.getRequestURI();
-        if (uri.contains("login")){
 
+        StatusService statusService = new StatusService(statusMapper);
+
+        List<String> list = statusService.findSessionList();
+     
+        if (uri.contains("login") || uri.contains("register")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else if (list != null && list.contains(session.getId())) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            BaseModel<String> baseModel = new BaseModel<>();
+            baseModel.setCode(-3);
+            baseModel.setMsg("sessionId timeout");
+            baseModel.setResult("");
+            response.getWriter().write(JSON.toJSONString(baseModel));
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     /**

@@ -13,6 +13,7 @@ import kotlin.math.log
 /**
  * Created by dai on 2018/1/25.
  */
+@Suppress("DEPRECATION")
 @Service
 class RegisterService @Autowired
 constructor(val registerMapper: RegisterMapper) {

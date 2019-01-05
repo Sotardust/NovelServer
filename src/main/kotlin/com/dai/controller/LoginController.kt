@@ -27,6 +27,7 @@ import kotlin.collections.set
 /**
  * Created by dai on 2018/1/29.
  */
+@Suppress("DEPRECATION")
 @Controller
 @RequestMapping("/mobile")
 class LoginController @Autowired

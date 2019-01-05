@@ -6,5 +6,5 @@ data class MusicLibrary(
         val name: String, //音乐名称
         val path: String, //存放路径
         val type: String,//音乐类型
-        val duration: String//音乐时长
+        val duration: Int//音乐时长
 )
