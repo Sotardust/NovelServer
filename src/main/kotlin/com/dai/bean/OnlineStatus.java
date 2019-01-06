@@ -16,4 +16,8 @@ public class OnlineStatus {
 
     //存活时间
     public long aliveTime;
+
+    public OnlineStatus() {
+
+    }
 }

@@ -23,11 +23,21 @@
         FROM music_library
         where name = #{name}
     </select>
-    <select id="getCloudMusics" resultType="com.dai.bean.music.CloudMusic" parameterType="Integer">
+    <select id="getMusicPath" resultType="String" parameterType="String">
+        SELECT path
+        FROM music_library
+        where name = #{name}
+    </select>
+    <select id="getCloudMusics" resultMap="CloudMusicMap" parameterType="Integer">
         SELECT *
         FROM cloud_music
         where person_id = #{personId}
     </select>
+
+    <resultMap id="CloudMusicMap" type="com.dai.bean.music.CloudMusic">
+        <result column="person_id" property="personId"/>
+        <result column="music_id" property="musicId"/>
+    </resultMap>
 
     <insert id="insertCloudMusic" useGeneratedKeys="true">
         INSERT INTO cloud_music (person_id, music_id, name, path, type, duration)

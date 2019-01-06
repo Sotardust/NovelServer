@@ -4,17 +4,23 @@ package com.dai.service.music;
 import com.dai.bean.model.BaseModel;
 import com.dai.bean.music.CloudMusic;
 import com.dai.bean.music.MusicLibrary;
+import com.dai.controller.Song;
 import com.dai.dao.MusicMapper;
 import com.dai.service.StatusService;
 import com.dai.utils.file.PathUtil;
+import org.apache.ibatis.javassist.bytecode.ByteArray;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +79,13 @@ public class MusicService {
                 List<String> musicList = getNames(personId);
                 if (musicList != null) {
                     if (!musicList.contains(name)) { //若数据库中没有人员对应歌曲则进行保存
-                        CloudMusic cloudMusic = new CloudMusic(personId, musicId, name, path, type, duration);
+                        CloudMusic cloudMusic = new CloudMusic();
+                        cloudMusic.personId = personId;
+                        cloudMusic.musicId = musicId;
+                        cloudMusic.name = name;
+                        cloudMusic.path = path;
+                        cloudMusic.type = type;
+                        cloudMusic.duration = duration;
                         insertCloudMusic(cloudMusic);
                     }
                 }
@@ -101,7 +113,8 @@ public class MusicService {
         BaseModel<List<CloudMusic>> baseModel = new BaseModel<>();
         baseModel.setCode(0);
         baseModel.setMsg("");
-        baseModel.setResult(musicMapper.getCloudMusics(personId));
+        List<CloudMusic> list = musicMapper.getCloudMusics(personId);
+        baseModel.setResult(list);
         return baseModel;
     }
 
@@ -173,5 +186,33 @@ public class MusicService {
             logger.error(TAG, e);
         }
         return false;
+    }
+
+    /**
+     * 根据音乐名称下载音乐
+     *
+     * @param name 名称
+     * @return 输入流
+     */
+    public BaseModel<String> downloadMusic(String name) {
+        BaseModel<String> baseModel = new BaseModel<>();
+        baseModel.setCode(0);
+        baseModel.setMsg("下载成功");
+        try {
+            String filename = URLDecoder.decode(name, "UTF-8");
+            String path = musicMapper.getMusicPath(filename);
+            FileInputStream fileInputStream = new FileInputStream(path);
+            byte[] bytes = new byte[fileInputStream.available()];
+            fileInputStream.read(bytes);
+            fileInputStream.close();
+            baseModel.setResult(new String(bytes));
+        } catch (FileNotFoundException e) {
+            baseModel.setCode(-1);
+            baseModel.setMsg("下载失败");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return baseModel;
     }
 }

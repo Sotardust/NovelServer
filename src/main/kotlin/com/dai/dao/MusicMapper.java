@@ -24,4 +24,6 @@ public interface MusicMapper {
     Long getMusicId(String name);
 
     List<String> getNames(String personId);
+
+    String getMusicPath(String name);
 }

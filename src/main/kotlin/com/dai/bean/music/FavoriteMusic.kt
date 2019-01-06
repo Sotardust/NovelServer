@@ -9,4 +9,5 @@ data class FavoriteMusic(
         val path: String, //存放路径
         val duration: Int,//音乐时长
         val like: Boolean//是否喜欢
+
 )
