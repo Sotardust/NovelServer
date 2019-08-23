@@ -28,7 +28,6 @@ import java.util.List;
 @RequestMapping("/message")
 public class MusicController {
 
-
     private final MusicService musicService;
 
     @Autowired
@@ -68,4 +67,6 @@ public class MusicController {
     public BaseModel<String> downloadMusic(@RequestParam("songName") String songName) {
         return musicService.downloadMusic(songName);
     }
+
+
 }

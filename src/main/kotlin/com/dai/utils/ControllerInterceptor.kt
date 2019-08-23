@@ -23,7 +23,7 @@ class ControllerInterceptor {
 
     @Before("execution(* com.dai.*Controller.*(..)) && !within(com.dai.controller.LoginController)")
     fun logAccess(joinPoint: JoinPoint) {
-        println("Completed: " + joinPoint)
+        println("Completed: $joinPoint")
 
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes)
                 .request
@@ -37,13 +37,13 @@ class ControllerInterceptor {
         if (paramMap != null && !paramMap.isEmpty()) {
             for ((key, value) in paramMap) {
                 if ("" == params.toString()) {
-                    params.append(key + "=")
+                    params.append("$key=")
                 } else {
                     params.append("&$key=")
                 }
 
                 var paramValue = ""
-                if (value != null && value.size > 0) {
+                if (value != null && value.isNotEmpty()) {
                     paramValue = value[0]
                 }
 

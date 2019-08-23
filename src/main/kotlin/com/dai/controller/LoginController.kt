@@ -142,7 +142,15 @@ constructor(private val loginService: LoginService) {
 
         return response
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/login/getList", method = [RequestMethod.GET])
+    fun getTestList(): List<String> {
+        val strings = ArrayList<String>()
+        for (i in 0..9) {
+            strings.add("test$i")
+        }
+        return strings
+    }
 
     @Bean
     fun objectMapper(): ObjectMapper {
