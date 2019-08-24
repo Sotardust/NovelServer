@@ -2,14 +2,13 @@ package com.dai.controller.music;
 
 import com.dai.bean.model.BaseModel;
 import com.dai.bean.music.CloudMusic;
-import com.dai.bean.music.MusicLibrary;
+
 import com.dai.service.music.MusicService;
-import com.dai.utils.file.PathUtil;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.List;
 
