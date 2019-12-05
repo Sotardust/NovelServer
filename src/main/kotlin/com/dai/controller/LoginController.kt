@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import java.util.ArrayList
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.collections.HashMap
@@ -143,7 +143,7 @@ constructor(private val loginService: LoginService) {
         return response
     }
     @ResponseBody
-    @RequestMapping(value = "/login/getList", method = [RequestMethod.GET])
+    @RequestMapping(value = ["/login/getList"], method = [RequestMethod.GET])
     fun getTestList(): List<String> {
         val strings = ArrayList<String>()
         for (i in 0..9) {

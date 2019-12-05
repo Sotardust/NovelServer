@@ -18,13 +18,13 @@ object PathUtil {
 //    private val PATH =Thread.currentThread().contextClassLoader.getResource("")!!.toString() ;
 
     //windows测试路径
-    private val PATH = "F:\\testmusic\\"
+    private val PATH = "E:\\novelData\\"
 //    //Linux测试路径
 //    private val PATH  = "/var/workfile/music/"
     /**
      * 数据文件路径
      */
-    open val MUSIC_PATH = PATH + "music" + File.separator
+     val MUSIC_PATH = PATH + "music" + File.separator
 
     /**
      * 日志路径

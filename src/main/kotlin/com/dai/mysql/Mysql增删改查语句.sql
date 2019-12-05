@@ -21,10 +21,10 @@
 # INSERT INTO tasks_bak SELECT * FROM tasks;
 
 ####################### update 语句 ################################
-# 使用UPDATE语句将Mary的电子邮件更新为新的电子邮件：mary.new@yiibai.com
-# UPDATE employees SET  email = 'mary.new@yiibai.com' WHERE  employeeNumber = 1056;
+# 使用UPDATE语句将Mary的电子邮件更新为新的电子邮件：email@test.com.com
+# UPDATE employees SET  email = 'email@test.com.com' WHERE  employeeNumber = 1056;
 # MySQL UPDATE多列
-# UPDATE employees SET  lastname = 'Hill',  email = 'mary.hill@yiibai.com' WHERE  employeeNumber = 1056;
+# UPDATE employees SET  lastname = 'Hill',  email = 'email@test.com.com' WHERE  employeeNumber = 1056;
 
 # 使用SELECT语句的MySQL UPDATE示例，使用SELECT语句查询来自其他表的数据来提供给SET子句的值。
 # UPDATE customers SET salesRepEmployeeNumber = (
