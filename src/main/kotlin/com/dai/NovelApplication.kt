@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.web.servlet.ServletComponentScan
 import java.io.File
 
+@Suppress("SpringBootApplicationSetup")
 @SpringBootApplication
 @ServletComponentScan
 @EnableAutoConfiguration(exclude = [(DataSourceAutoConfiguration::class)])

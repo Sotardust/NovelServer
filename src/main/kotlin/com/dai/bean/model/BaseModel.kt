@@ -3,13 +3,13 @@ package com.dai.bean.model
 
 open class BaseModel<T> {
     /**
-     * -3 : sessionId 会话超时
-     * -2 : 服务器未设置返回结果（默认返回值）
-     * -1 : 服务器程序异常
-     * 0 : 返回成功
-     * 1 : 返回失败
+     * 103 : sessionId 会话超时
+     * 102 : 服务器未设置返回结果（默认返回值）
+     * 101 : 服务器程序异常
+     * 100 : 成功
+     * 99 : 失败
      */
-    var code: Int = -2
+    var code: Int = HttpStatusCode.CODE_102
 
     var msg: String? = null
 

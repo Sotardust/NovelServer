@@ -13,16 +13,16 @@ import org.springframework.context.annotation.PropertySource
 import org.springframework.core.io.ResourceLoader
 import org.springframework.core.io.support.ResourcePatternUtils
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
 @Configuration
 @MapperScan(basePackages = ["com.dai.dao"], sqlSessionFactoryRef = "sqlSessionFactory")
 
-//@EnableTransactionManagement
+@EnableTransactionManagement
 // 自己添加的，指定配置文件
 @PropertySource(value = ["classpath:application.properties"], ignoreResourceNotFound = true)
-class DataSourceConfig
-constructor() {
+class DataSourceConfig {
 
     @Value("\${spring.datasource.driver-class-name}")
     private val driverName: String? = null

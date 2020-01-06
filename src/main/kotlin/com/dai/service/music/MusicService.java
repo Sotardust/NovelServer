@@ -2,25 +2,22 @@ package com.dai.service.music;
 
 
 import com.dai.bean.model.BaseModel;
+import com.dai.bean.model.HttpStatusCode;
 import com.dai.bean.music.CloudMusic;
 import com.dai.bean.music.MusicLibrary;
-import com.dai.controller.Song;
 import com.dai.dao.MusicMapper;
 import com.dai.service.StatusService;
 import com.dai.utils.file.PathUtil;
-import org.apache.ibatis.javassist.bytecode.ByteArray;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +54,7 @@ public class MusicService {
         BaseModel<ArrayList<String>> baseModel = new BaseModel<>();
         for (int i = 0; i < files.size(); i++) {
             try {
-                baseModel.setCode(0);
+                baseModel.setCode(HttpStatusCode.CODE_100);
                 final MultipartFile multipartFile = files.get(i);
                 final String path = PathUtil.INSTANCE.getMUSIC_PATH() + URLDecoder.decode(multipartFile.getOriginalFilename(), "UTF-8");
                 long musicId = id + i;
@@ -70,8 +67,7 @@ public class MusicService {
 
                 if (!isExist(name)) {//若音乐库中不存在则进行保存
                     multipartFile.transferTo(file);
-                    MusicLibrary musicLibrary = new MusicLibrary(musicId, name, path, type, duration);
-                    insertMusic(musicLibrary);
+                    insertMusic(new MusicLibrary(musicId, name, path, type, duration));
                 } else {
                     musicId = getMusicId(name);
                 }
@@ -111,9 +107,12 @@ public class MusicService {
 
         final int personId = statusService.getPersonId(httpServletRequest);
         BaseModel<List<CloudMusic>> baseModel = new BaseModel<>();
-        baseModel.setCode(0);
+        baseModel.setCode(HttpStatusCode.CODE_100);
         baseModel.setMsg("");
         List<CloudMusic> list = musicMapper.getCloudMusics(personId);
+        if (list == null) {
+            baseModel.setCode(HttpStatusCode.CODE_99);
+        }
         baseModel.setResult(list);
         return baseModel;
     }
@@ -196,7 +195,7 @@ public class MusicService {
      */
     public BaseModel<String> downloadMusic(String name) {
         BaseModel<String> baseModel = new BaseModel<>();
-        baseModel.setCode(0);
+        baseModel.setCode(HttpStatusCode.CODE_100);
         baseModel.setMsg("下载成功");
         try {
             String filename = URLDecoder.decode(name, "UTF-8");
@@ -207,7 +206,7 @@ public class MusicService {
             fileInputStream.close();
             baseModel.setResult(new String(bytes));
         } catch (FileNotFoundException e) {
-            baseModel.setCode(-1);
+            baseModel.setCode(HttpStatusCode.CODE_101);
             baseModel.setMsg("下载失败");
             e.printStackTrace();
         } catch (IOException e) {

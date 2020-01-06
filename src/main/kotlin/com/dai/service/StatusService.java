@@ -28,6 +28,7 @@ public class StatusService implements StatusMapper {
     public String findSessionId(String personId) {
 
         return statusMapper.findSessionId(personId);
+
     }
 
     /**
@@ -44,6 +45,7 @@ public class StatusService implements StatusMapper {
     @Override
     public int getPersonId(String sessionId) {
         return statusMapper.getPersonId(sessionId);
+
     }
 
     @Override

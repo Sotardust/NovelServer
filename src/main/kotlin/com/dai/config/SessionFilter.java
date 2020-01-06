@@ -2,6 +2,7 @@ package com.dai.config;
 
 import com.alibaba.fastjson.JSON;
 import com.dai.bean.model.BaseModel;
+import com.dai.bean.model.HttpStatusCode;
 import com.dai.dao.StatusMapper;
 import com.dai.service.StatusService;
 import org.apache.log4j.Logger;
@@ -23,7 +24,7 @@ public class SessionFilter implements Filter {
     private StatusMapper statusMapper;
 
     private final Logger logger = Logger.getLogger(SessionFilter.class);
-    String[] includeUrls = new String[]{"login", "register"};
+    private String[] includeUrls = new String[]{"login", "register"};
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -39,14 +40,14 @@ public class SessionFilter implements Filter {
         StatusService statusService = new StatusService(statusMapper);
 
         List<String> list = statusService.findSessionList();
-     
+
         if (uri.contains("login") || uri.contains("register")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (list != null && list.contains(session.getId())) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             BaseModel<String> baseModel = new BaseModel<>();
-            baseModel.setCode(-3);
+            baseModel.setCode(HttpStatusCode.CODE_103);
             baseModel.setMsg("sessionId timeout");
             baseModel.setResult("");
             response.getWriter().write(JSON.toJSONString(baseModel));

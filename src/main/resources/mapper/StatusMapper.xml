@@ -37,7 +37,7 @@
 
     <update id="updateStatus">
         update online_status
-        set session_id =#{sessionId},
+        set session_id = #{sessionId},
             status     = #{status}
         where person_id = #{personId}
     </update>

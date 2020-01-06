@@ -2,13 +2,9 @@ package com.dai.controller.music;
 
 import com.dai.bean.model.BaseModel;
 import com.dai.bean.music.CloudMusic;
-
 import com.dai.service.music.MusicService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +47,7 @@ public class MusicController {
      * @return BaseModel
      */
     @ResponseBody
-    @RequestMapping(value = "/getCloudMusic", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCloudMusics", method = RequestMethod.GET)
     public BaseModel<List<CloudMusic>> getCloudMusics(HttpServletRequest httpServletRequest) {
 
         return musicService.getCloudMusics(httpServletRequest);

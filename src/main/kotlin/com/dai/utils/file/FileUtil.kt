@@ -1,7 +1,6 @@
 package com.dai.utils.file
 
 
-import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
@@ -22,7 +21,7 @@ object FileUtil {
      */
     fun createLogFile() {
         logger.info("createLogFile: ")
-        val log = PathUtil.LOG_PATH + FileUtil.LOG_FILE
+        val log = PathUtil.LOG_PATH + LOG_FILE
         FileManager.getInstance()?.createNewFile(log)
     }
 }
