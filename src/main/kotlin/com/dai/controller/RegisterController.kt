@@ -46,7 +46,7 @@ constructor(private val registerService: RegisterService, private val statusServ
                 statusService.insertOnlineStatus(onlineStatus)
             }
         }
-        return registerService.loginResult(name, password)
+        return registerService.loginResult(name, password,personId)
 
     }
 

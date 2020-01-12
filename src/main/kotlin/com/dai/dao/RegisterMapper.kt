@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 interface RegisterMapper {
     fun getAllCount(): Int
     fun insertPerson(person: Person)
-    fun getAllAccount(): List<String>
+    fun getAllAccount(): List<Person>
     fun findPassword(account: String): String
     fun findPersonId(account: String): Int
 }

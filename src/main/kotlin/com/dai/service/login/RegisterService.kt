@@ -37,7 +37,7 @@ constructor(val registerMapper: RegisterMapper) {
     fun registerResult(person: Person): String {
 
         // 查找所有账号
-        val flag = registerMapper.getAllAccount().any { person.name == it }
+        val flag = registerMapper.getAllAccount().any { person.name == it.name }
         val loginModel = LoginModel()
         if (flag) {
             loginModel.code = HttpStatusCode.CODE_100
@@ -69,7 +69,7 @@ constructor(val registerMapper: RegisterMapper) {
      * @param name  姓名
      * @param password 密码
      */
-    fun loginResult(name: String, password: String): String {
+    fun loginResult(name: String, password: String,personId :Int): String {
 
         val loginModel = LoginModel()
         try {
@@ -84,6 +84,7 @@ constructor(val registerMapper: RegisterMapper) {
             val flag = password.equals(pd)
             loginModel.code = if (flag) HttpStatusCode.CODE_100 else HttpStatusCode.CODE_99
             loginModel.msg = if (flag) "登录成功" else "密码错误"
+            loginModel.result = personId
         } catch (e: SQLException) {
             e.printStackTrace()
             loginModel.code = HttpStatusCode.CODE_101

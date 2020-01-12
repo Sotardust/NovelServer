@@ -14,8 +14,9 @@ constructor(private val registerMapper: RegisterMapper) {
     // 返回登录结果
     fun returnResult(name: String, password: String): Any {
         val result = HashMap<String, String>()
-        val flag = registerMapper.getAllAccount().any { name == it }
-        if (!flag) {
+        val person = registerMapper.getAllAccount().first { name == it.name }
+
+        if (person.name != name) {
             result["success"] = "0";
             result["error"] = "用户名错误";
 
@@ -27,6 +28,7 @@ constructor(private val registerMapper: RegisterMapper) {
         val pwd = registerMapper.findPassword(name)
         if (pwd == password) {
             result["success"] = "1"
+            result["personId"] = person.personId.toString()
             result["error"] = ""
         } else {
             result["success"] = "0"

@@ -8,7 +8,7 @@
         FROM person
     </select>
 
-    <select id="getAllAccount" resultType="String">
+    <select id="getAllAccount" resultType="com.dai.bean.Person">
         SELECT name
         FROM person
     </select>

@@ -1,5 +1,5 @@
 package com.dai.bean.model
 
-class LoginModel : BaseModel<String>() {
+class LoginModel : BaseModel<Int>() {
 
 }
